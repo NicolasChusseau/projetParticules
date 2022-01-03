@@ -53,7 +53,7 @@ func (s *System) Update() {
       ScaleX:	scale, ScaleY: scale,
       ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
       Opacity: 1,
-      SpeedX: spdX * 2, SpeedY: 5,
+      SpeedX: spdX * 2, SpeedY: 2,
     })
   }
   log.Print(len(s.Content))

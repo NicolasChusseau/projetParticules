@@ -1,7 +1,7 @@
 {
 	"WindowTitle": "Project particles",
 	"WindowSizeX": 1920,
-  "WindowSizeY": 1000,
+  "WindowSizeY": 1010,
 	"ParticleImage": "assets/flocon.png",
 	"ImgSizeX": 869,
 	"ImgSizeY": 980,
@@ -10,5 +10,5 @@
 	"RandomSpawn": true,
 	"SpawnX": 400,
 	"SpawnY": 50,
-	"SpawnRate": 1
+	"SpawnRate": 0.1
 }
