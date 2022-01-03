@@ -5,6 +5,7 @@ package particles
 // évoluer durant votre projet.
 type System struct {
 	Content []Particle
+	Spawnrate float64
 }
 
 // Particle définit une particule.
@@ -18,4 +19,5 @@ type Particle struct {
 	ColorRed, ColorGreen, ColorBlue float64
 	Opacity                         float64
 	SpeedX, SpeedY									float64
+	Lock														bool
 }

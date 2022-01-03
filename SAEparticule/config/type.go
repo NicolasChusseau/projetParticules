@@ -11,6 +11,8 @@ type Config struct {
 	WindowTitle              string
 	WindowSizeX, WindowSizeY int
 	ParticleImage            string
+	ImgSizeX								 int
+	ImgSizeY								 int
 	Debug                    bool
 	InitNumParticles         int
 	RandomSpawn              bool
