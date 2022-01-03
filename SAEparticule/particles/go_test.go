@@ -27,6 +27,10 @@ func TestNewSystem2(t *testing.T)  {
 
 func TestUpdate1(t *testing.T)  {
   config.General.InitNumParticles = 5
+  config.General.WindowSizeX = 100
+  config.General.WindowSizeY = 100
+  config.General.SpawnX = 50
+  config.General.SpawnY = 50
   s := NewSystem()
   config.General.SpawnRate = 1
   s.Update()
@@ -44,7 +48,6 @@ func TestUpdate1(t *testing.T)  {
 
 
 func TestUpdate2(t *testing.T)  {
-  config.General.InitNumParticles = 5
   s := NewSystem()
   config.General.SpawnRate = 2.5
   s.Update()
@@ -62,7 +65,6 @@ func TestUpdate2(t *testing.T)  {
 
 
 func TestUpdate3(t* testing.T)  {
-  config.General.InitNumParticles = 1
   s := NewSystem()
   posX := s.Content[0].PositionX
   posY := s.Content[0].PositionY
