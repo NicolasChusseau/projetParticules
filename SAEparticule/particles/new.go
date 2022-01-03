@@ -3,7 +3,6 @@ package particles
 import (
 	"project-particles/config"
 	"math/rand"
-	"log"
 	"time"
 )
 
@@ -33,7 +32,6 @@ func NewSystem() System {
 			sus.Content = append(sus.Content, p)
 		}
 	}else{
-		log.Print("nonn")
 		for i := 0; i < config.General.InitNumParticles; i++ {
 			p := Particle{
 				PositionX: float64(config.General.SpawnX),
@@ -46,6 +44,5 @@ func NewSystem() System {
 			sus.Content = append(sus.Content, p)
 		}
 	}
-	log.Print("ui")
 	return sus
 }
