@@ -1,6 +1,6 @@
 {
 	"WindowTitle": "Project particles",
-	"WindowSizeX": 1000,
+	"WindowSizeX": 1920,
   "WindowSizeY": 1000,
 	"ParticleImage": "assets/flocon.png",
 	"ImgSizeX": 869,
