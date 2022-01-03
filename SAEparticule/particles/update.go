@@ -4,6 +4,7 @@ import (
   "project-particles/config"
   "math/rand"
   "time"
+  "log"
 )
 
 // Update mets à jour l'état du système de particules (c'est-à-dire l'état de
@@ -16,21 +17,22 @@ func (s *System) Update() {
     s.Content[p].PositionX += s.Content[p].SpeedX
     s.Content[p].PositionY += s.Content[p].SpeedY
     if s.Content[p].PositionX >= float64(config.General.WindowSizeX){
-      remove(s.Content, p)
+      s.Content = remove(s.Content, p)
       break
     }
     if s.Content[p].PositionX <= -10{
-      remove(s.Content, p)
+      s.Content = remove(s.Content, p)
       break
     }
     if s.Content[p].PositionY >= float64(config.General.WindowSizeY){
-      remove(s.Content, p)
+      s.Content = remove(s.Content, p)
       break
     }
     if s.Content[p].PositionY <= -10{
       s.Content[p].PositionY = float64(config.General.WindowSizeY)-2
     }
   }
+  log.Println(len(s.Content))
 
   s.Spawnrate += config.General.SpawnRate
   for s.Spawnrate >= 1{
@@ -44,7 +46,7 @@ func (s *System) Update() {
       ScaleX:	1, ScaleY: 1,
       ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
       Opacity: 1,
-      SpeedX: spdX * 5, SpeedY: 2,
+      SpeedX: spdX * 10, SpeedY: 5,
     })
   }
 }
