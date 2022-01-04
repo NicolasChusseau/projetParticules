@@ -29,11 +29,15 @@ func (s *System) Update() {
     if !(s.Content[p].PositionY + float64(config.General.ImgSizeY)*s.Content[p].ScaleY >= float64(config.General.WindowSizeY)){
       s.Content[p].PositionY += s.Content[p].SpeedY
       s.Content[p].PositionX += s.Content[p].SpeedX
+      r := rand.Float64()*rand.Float64()/30000
+      s.Content[p].ScaleX -= r
+      s.Content[p].ScaleY -= r
+    }else{
+      r := rand.Float64()*rand.Float64()/30000
+      s.Content[p].ScaleX -= 3*r
+      s.Content[p].ScaleY -= 3*r
     }
 
-    r := rand.Float64()*rand.Float64()/30000
-    s.Content[p].ScaleX -= r
-    s.Content[p].ScaleY -= r
     if s.Content[p].ScaleX <= 0{
       s.Content = remove(s.Content, p)
       break
@@ -60,8 +64,13 @@ func (s *System) Update() {
 }
 
 func remove(t []Particle, s int) (l []Particle){
-  l = t[:s]
-  l = append(l, t[s+1:]...)
+  if s > len(t)/2{
+    l = t[s+1:]
+    l = append(l, t[:s]...)
+  }else{
+    l = t[:s]
+    l = append(l, t[s+1:]...)
+  }
   return l
 }
 
