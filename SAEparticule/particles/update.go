@@ -26,8 +26,8 @@ func (s *System) Update() {
       s.Content[p].PositionY = float64(config.General.WindowSizeY)-2
     }
   }
-  if len(s.Content) > 10000{
-    s.Content = s.Content[5000:]
+  if len(s.Content) > 20000{
+    s.Content = s.Content[1000:]
   }
   log.Println(len(s.Content))
 
