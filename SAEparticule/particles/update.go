@@ -17,20 +17,17 @@ func (s *System) Update() {
     s.Content[p].PositionX += s.Content[p].SpeedX
     s.Content[p].PositionY += s.Content[p].SpeedY
     if s.Content[p].PositionX >= float64(config.General.WindowSizeX){
-      s.Content = remove(s.Content, p)
-      break
     }
     if s.Content[p].PositionX <= -10{
-      s.Content = remove(s.Content, p)
-      break
     }
     if s.Content[p].PositionY >= float64(config.General.WindowSizeY){
-      s.Content = remove(s.Content, p)
-      break
     }
     if s.Content[p].PositionY <= -10{
       s.Content[p].PositionY = float64(config.General.WindowSizeY)-2
     }
+  }
+  if len(s.Content) > 10000{
+    s.Content = s.Content[5000:]
   }
   log.Println(len(s.Content))
 
@@ -53,10 +50,9 @@ func (s *System) Update() {
 
 
 
-func remove(t []Particle, s int) (l []Particle){
-  l = t[:s]
-  l = append(l, t[s+1:]...)
-  return l
+func remove(t []Particle, s int) ([]Particle){
+  t[s], t[len(t)-1] = t[len(t)-1], t[s]
+  return t[:len(t)-1]
 }
 
 
