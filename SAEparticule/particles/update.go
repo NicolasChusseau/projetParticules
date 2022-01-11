@@ -73,12 +73,7 @@ func (s *System) Update() {
 
 
 
-/*
-func remove(t []Particle, s int) ([]Particle){
-  t[s], t[len(t)-1] = t[len(t)-1], t[s]
-  return t[:len(t)-1]
-}
-*/
+
 
 
 
