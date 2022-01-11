@@ -8,5 +8,6 @@
 	"RandomSpawn": false,
 	"SpawnX": 400,
 	"SpawnY": 50,
-	"SpawnRate": 0.1
+	"SpawnRate": 1,
+	"MaxParticles": 100
 }

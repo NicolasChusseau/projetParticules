@@ -19,8 +19,8 @@ func NewSystem() System {
 		spdX = -spdX
 	}
 	if config.General.RandomSpawn{
+		rand.Seed(time.Now().UnixNano())
 		for i := 0; i < config.General.InitNumParticles; i++ {
-			rand.Seed(time.Now().UnixNano())
 			p := Particle{
 				PositionX: rand.Float64() * float64(config.General.WindowSizeX),
 				PositionY: rand.Float64() * float64(config.General.WindowSizeY),
