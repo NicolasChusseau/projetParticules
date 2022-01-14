@@ -17,6 +17,7 @@ type Config struct {
 	SpawnX, SpawnY           int
 	SpawnRate                float64
 	MaxParticles						 int
+	Gravite									 float64
 }
 
 var General Config

@@ -26,7 +26,7 @@ func NewSystem() System {
 				ScaleX:    1, ScaleY: 1,
 				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
 				Opacity: 1,
-				SpeedX: spdX, SpeedY: 2,
+				SpeedX: spdX, SpeedY: -2,
 			}
 			sus.Content = append(sus.Content, p)
 		}
@@ -38,7 +38,7 @@ func NewSystem() System {
 				ScaleX:	1, ScaleY: 1,
 				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
 				Opacity: 1,
-				SpeedX: spdX * 5, SpeedY: 2,
+				SpeedX: spdX * 5, SpeedY: -2,
 			}
 			sus.Content = append(sus.Content, p)
 		}

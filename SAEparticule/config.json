@@ -7,7 +7,8 @@
 	"InitNumParticles": 10,
 	"RandomSpawn": false,
 	"SpawnX": 400,
-	"SpawnY": 50,
-	"SpawnRate": 1,
-	"MaxParticles": 100
+	"SpawnY": 550,
+	"SpawnRate": 10,
+	"MaxParticles": 1000,
+	"Gravite": 0.07
 }
