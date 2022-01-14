@@ -119,7 +119,6 @@ func TestEstNonVisible(t *testing.T)  {
   if !EstNonVisible(p){
     t.Fail()
   }
-
 }
 
 

@@ -12,9 +12,9 @@ import (
 // 60 fois par seconde (de manière régulière) par la fonction principale du
 // projet.
 // C'est à vous de développer cette fonction.
-//Dans cette fonction, il a été décidé de respecter le MaxParticles avant le SpawnRate
+//Dans cette fonction, il a été décidé de respecter le MaxParticles avant le SpawnRate, il est conseillé d'avoir un maximum de particule au moins 100 fois supérieur au spawnrate.
 func (s *System) Update() {
-  for p,_ := range s.Content { //cette boucle sert à déplacer les particules et à vérifier si elles toujours visible à l'écran
+  for p,_ := range s.Content { //cette boucle sert à modifier les paramètres des particules et à vérifier si elles toujours visible à l'écran
     s.Content[p].PositionX += s.Content[p].SpeedX
     s.Content[p].PositionY += s.Content[p].SpeedY
     s.Content[p].SpeedY += config.General.Gravite
@@ -49,13 +49,13 @@ func (s *System) Update() {
     for s.Spawnrate >= 1{
       s.Spawnrate -= 1
       indice := 0
-      for indice < len(s.Content) && s.Content[indice].NonVisible == false{ //On cherche une particules qui n'est plus à l'écran
+      for indice < len(s.Content) && !s.Content[indice].NonVisible{ //On cherche une particules qui n'est plus à l'écran
         indice ++
       }
       if indice != len(s.Content){ //Cette condiction permet de vérifier si une particule à été trouvé ou non (si indice==len(s.Content) alors toutes les particules sont encore visible à l'écran)
         spdX := rand.Float64()
         spdX -= 0.5
-        spdY := rand.Float64() * 10
+        spdY := rand.Float64() * 2
         s.Content[indice] = Particle{
           PositionX: float64(config.General.SpawnX),
           PositionY: float64(config.General.SpawnY),

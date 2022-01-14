@@ -26,7 +26,45 @@ func NewSystem() System {
 				ScaleX:    1, ScaleY: 1,
 				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
 				Opacity: 1,
-				SpeedX: spdX, SpeedY: -2,
+				SpeedX: spdX, SpeedY: -5,
+			}
+			sus.Content = append(sus.Content, p)
+		}
+	}else if config.General.SpawnCarre{
+		var posX float64
+		var posY float64
+		for i := 0; i < config.General.InitNumParticles; i++ {
+			temp := rand.Float64()
+			if temp > 0.5{
+				if temp > 0.75{
+					posX = float64(config.General.SpawnX)/4
+					posY = rand.Float64()*float64(config.General.WindowSizeY)/2+float64(config.General.WindowSizeY)/4
+					spdX = 0
+					spdY = 1
+				}else {
+					posX = 3*float64(config.General.SpawnX)/4
+					posY = rand.Float64()*float64(config.General.WindowSizeY)/2+float64(config.General.WindowSizeY)/4
+					spdX = 0
+					spdY = -1
+				}
+			}else if temp < 0.25{
+				posY = float64(config.General.SpawnX)/4
+				posX = rand.Float64()*float64(config.General.WindowSizeX)/2+float64(config.General.WindowSizeX)/4
+				spdX = 1
+				spdY = 0
+			}else {
+				posY = 3*float64(config.General.SpawnX)/4
+				posX = rand.Float64()*float64(config.General.WindowSizeX)/2+float64(config.General.WindowSizeX)/4
+				spdX = -1
+				spdY = 0
+			}
+			p := Particle{
+				PositionX: posX,
+				PositionY: posY,
+				ScaleX:	1, ScaleY: 1,
+				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
+				Opacity: 1,
+				SpeedX: spdX, SpeedY: spdY,
 			}
 			sus.Content = append(sus.Content, p)
 		}
@@ -38,7 +76,7 @@ func NewSystem() System {
 				ScaleX:	1, ScaleY: 1,
 				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
 				Opacity: 1,
-				SpeedX: spdX * 5, SpeedY: -2,
+				SpeedX: spdX * 5, SpeedY: -5,
 			}
 			sus.Content = append(sus.Content, p)
 		}
