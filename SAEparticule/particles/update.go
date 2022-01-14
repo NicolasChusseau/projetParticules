@@ -17,18 +17,7 @@ func (s *System) Update() {
   for p,_ := range s.Content { //cette boucle sert à déplacer les particules et à vérifier si elles toujours visible à l'écran
     s.Content[p].PositionX += s.Content[p].SpeedX
     s.Content[p].PositionY += s.Content[p].SpeedY
-    if s.Content[p].PositionX >= float64(config.General.WindowSizeX){
-      s.Content[p].NonVisible = true
-    }
-    if s.Content[p].PositionX <= -10{
-      s.Content[p].NonVisible = true
-    }
-    if s.Content[p].PositionY >= float64(config.General.WindowSizeY){
-      s.Content[p].NonVisible = true
-    }
-    if s.Content[p].PositionY <= -10{
-      s.Content[p].NonVisible = true
-    }
+    s.Content[p].NonVisible = EstNonVisible(s.Content[p])
   }
   log.Println(len(s.Content))
 
@@ -65,16 +54,18 @@ func (s *System) Update() {
           ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
           Opacity: 1,
           SpeedX: spdX * 10, SpeedY: 5,
-      }
+        }
       }
     }
   }
 }
 
-
-
-
-
+func EstNonVisible(p Particle) bool {
+  if p.PositionX >= float64(config.General.WindowSizeX) || p.PositionX <= -10 || p.PositionY >= float64(config.General.WindowSizeY) || p.PositionY <= -10{
+    return true
+  }
+  return false
+}
 
 
 

@@ -104,7 +104,23 @@ func TestMaxParticles(t *testing.T)  {
   }
 }
 
+func TestEstNonVisible(t *testing.T)  {
+  config.General.WindowSizeX=5
+  config.General.WindowSizeY=5
+  p := Particle{
+    PositionX: 2.5,
+    PositionY: 2.5,
+    NonVisible: false,
+  }
+  if EstNonVisible(p){
+    t.Fail()
+  }
+  p.PositionX = 10
+  if !EstNonVisible(p){
+    t.Fail()
+  }
 
+}
 
 
 
