@@ -12,8 +12,9 @@ import (
 // 60 fois par seconde (de manière régulière) par la fonction principale du
 // projet.
 // C'est à vous de développer cette fonction.
+//Dans cette fonction, il a été décidé de respecter le MaxParticles avant le SpawnRate
 func (s *System) Update() {
-  for p,_ := range s.Content {
+  for p,_ := range s.Content { //cette boucle sert à déplacer les particules et à vérifier si elles toujours visible à l'écran
     s.Content[p].PositionX += s.Content[p].SpeedX
     s.Content[p].PositionY += s.Content[p].SpeedY
     if s.Content[p].PositionX >= float64(config.General.WindowSizeX){
@@ -33,8 +34,8 @@ func (s *System) Update() {
 
   s.Spawnrate += config.General.SpawnRate
   rand.Seed(time.Now().UnixNano())
-  if config.General.MaxParticles > len(s.Content){
-    for s.Spawnrate >= 1{
+  if config.General.MaxParticles > len(s.Content){  //On respecte le maximum de particules avant de respecter le spawnrate
+    for s.Spawnrate >= 1{ //Cette boucle sert à ajouter les particules en fonction du spawnrate
       s.Spawnrate -= 1
       spdX := rand.Float64()
       spdX -= 0.5
@@ -47,16 +48,16 @@ func (s *System) Update() {
         SpeedX: spdX * 10, SpeedY: 5,
       })
     }
-  }else {
+  }else { //Cette boucle est utilisé lorsque le maximum de particules à été atteint ou dépassé. Ici, on recycle les particules qui ne sont plus visible, celles qui sont sortie de l'écran
     for s.Spawnrate >= 1{
       s.Spawnrate -= 1
       spdX := rand.Float64()
       spdX -= 0.5
       indice := 0
-      for indice < len(s.Content) && s.Content[indice].NonVisible == false{
+      for indice < len(s.Content) && s.Content[indice].NonVisible == false{ //On cherche une particules qui n'est plus à l'écran
         indice ++
       }
-      if indice != len(s.Content){
+      if indice != len(s.Content){ //Cette condiction permet de vérifier si une particule à été trouvé ou non (si indice==len(s.Content) alors toutes les particules sont encore visible à l'écran)
         s.Content[indice] = Particle{
           PositionX: float64(config.General.SpawnX),
           PositionY: float64(config.General.SpawnY),

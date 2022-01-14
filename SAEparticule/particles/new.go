@@ -18,7 +18,7 @@ func NewSystem() System {
 	if rand.Float64() > 0.5{
 		spdX = -spdX
 	}
-	if config.General.RandomSpawn{
+	if config.General.RandomSpawn{ //Initialisation des positions de départ des premières particules aléatoires
 		for i := 0; i < config.General.InitNumParticles; i++ {
 			p := Particle{
 				PositionX: rand.Float64() * float64(config.General.WindowSizeX),
