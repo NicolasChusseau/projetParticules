@@ -14,31 +14,48 @@ import (
 func NewSystem() System {
 	sus := System{Content: []Particle{}}
 	rand.Seed(time.Now().UnixNano())
-	spdX := rand.Float64()
-	if rand.Float64() > 0.5{
-		spdX = -spdX
+	var scalex float64 = float64(config.General.WindowSizeX)/100
+	var scaley float64 = scalex
+	var posX float64 = 0
+	var posY float64 = float64(config.General.WindowSizeY)-scaley
+	for posX < float64(config.General.WindowSizeX){
+		p := Particle{
+			ScaleX:    scalex, ScaleY: scaley,
+			PositionX: posX,
+			PositionY: posY,
+			ColorRed: 0, ColorGreen: 0, ColorBlue: 1,
+			Opacity: 1,
+			SpeedX: 0, SpeedY: 0,
+		}
+		sus.Content = append(sus.Content, p)
+		posY -= scaley
+		if posY <= 3*float64(config.General.WindowSizeY)/4{
+			posY = float64(config.General.WindowSizeY)-scaley
+			posX += scalex
+		}
 	}
+	sus.Separation = len(sus.Content) /100
 	if config.General.RandomSpawn{ //Initialisation des positions de départ des premières particules aléatoires
 		for i := 0; i < config.General.InitNumParticles; i++ {
 			p := Particle{
+				ScaleX:    3, ScaleY: 1,
 				PositionX: rand.Float64() * float64(config.General.WindowSizeX),
-				PositionY: rand.Float64() * float64(config.General.WindowSizeY),
-				ScaleX:    1, ScaleY: 1,
-				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
+				PositionY: -1,
+				ColorRed: 0.5, ColorGreen: 0.5, ColorBlue: 0.5,
 				Opacity: 1,
-				SpeedX: spdX, SpeedY: -5,
+				SpeedX: 0, SpeedY: 2,
 			}
 			sus.Content = append(sus.Content, p)
 		}
 	}else{
 		for i := 0; i < config.General.InitNumParticles; i++ {
 			p := Particle{
-				PositionX: float64(config.General.SpawnX),
-				PositionY: float64(config.General.SpawnY),
-				ScaleX:	1, ScaleY: 1,
-				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
+				PositionX: float64(config.General.SpawnX)/2,
+				PositionY: -1,
+				ScaleX:	3, ScaleY: 1,
+				ColorRed: 0, ColorGreen: 0, ColorBlue: 1,
 				Opacity: 1,
-				SpeedX: spdX * 5, SpeedY: -5,
+				SpeedX: 0, SpeedY: 2,
 			}
 			sus.Content = append(sus.Content, p)
 		}

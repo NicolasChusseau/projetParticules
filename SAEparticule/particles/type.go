@@ -6,6 +6,7 @@ package particles
 //ajout de spawnrate permettant de respecter à la lettre le SpawnRate du json
 type System struct {
 	Content []Particle
+	Separation int
 	Spawnrate float64
 }
 
@@ -23,4 +24,5 @@ type Particle struct {
 	Opacity                         float64
 	SpeedX, SpeedY									float64
 	NonVisible										  bool
+	Vague														int
 }
