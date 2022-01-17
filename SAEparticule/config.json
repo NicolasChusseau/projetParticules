@@ -9,6 +9,6 @@
 	"SpawnX": 400,
 	"SpawnY": 550,
 	"SpawnRate": 0.005,
-	"MaxParticles": 10000,
+	"MaxParticles": 2000,
 	"Gravite": 0
 }

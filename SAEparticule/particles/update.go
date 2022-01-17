@@ -22,11 +22,14 @@ func (s *System) Update() {
     if EstDansLo(s.Content[p]) && s.Content[p].ColorBlue != 1 && !s.Content[p].NonVisible{
       s.Content[p].NonVisible = true
       s.Content[p].Opacity = 0
-      for i := 0; i < s.Separation; i++ {
-        s.Content[int(s.Content[p].PositionX)+i].Vague = 1
-        s.Content[int(s.Content[p].PositionX+s.Content[p].ScaleX)+i*18].Vague = 5
+      if s.Content[p].PositionX > 0 && s.Content[p].PositionX < 800 {
+        for i := 0; i < s.Separation; i++ {
+          s.Content[int(s.Content[p].PositionX/s.Content[0].ScaleX*18)+i-1].Vague = 1
+          s.Content[int(s.Content[p].PositionX/s.Content[0].ScaleX*18)+i+17].Vague = 5
+        }
       }
     }
+
   }
 
   log.Println(len(s.Content))
@@ -38,7 +41,7 @@ func (s *System) Update() {
       s.Spawnrate -= 1
       s.Content = append(s.Content, Particle{
         ScaleX:    3, ScaleY: 1,
-				PositionX: rand.Float64() * float64(config.General.WindowSizeX),
+				PositionX: float64(rand.Intn(98)*8),
 				PositionY: -1,
 				ColorRed: 0.5, ColorGreen: 0.5, ColorBlue: 0.5,
 				Opacity: 1,
@@ -55,7 +58,7 @@ func (s *System) Update() {
       if indice != len(s.Content){ //Cette condiction permet de vérifier si une particule à été trouvé ou non (si indice==len(s.Content) alors toutes les particules sont encore visible à l'écran)
         s.Content[indice] = Particle{
           ScaleX:    3, ScaleY: 1,
-  				PositionX: rand.Float64() * float64(config.General.WindowSizeX),
+  				PositionX: float64(rand.Intn(100)*8),
   				PositionY: -1,
   				ColorRed: 0.5, ColorGreen: 0.5, ColorBlue: 0.5,
   				Opacity: 1,
@@ -83,55 +86,54 @@ func EstDansLo(p Particle) bool {
 5:début vague droite
 6:milieu vague droite
 7:fin vague droite
-8:arret vague droite*/
+8:arret vague droite
+9:en attente du début de la vague droite
+10:en attente du début de la vague gauche*/
 func Vague(s *System, p int){
   if s.Content[p].ColorBlue != 1{
     return
   }
 
   switch s.Content[p].Vague {
-  case 0:
-    s.Content[p].SpeedY = 0
-
+  case 10:
+    s.Content[p].Vague = 1
+  case 9:
+    s.Content[p].Vague = 5
+  case 8:
+    s.Content[p].Vague = 0
+  case 7:
+    s.Content[p].Vague = 8
+    s.Content[p].SpeedY = +s.Content[p].ScaleY
+  case 6:
+    s.Content[p].Vague = 7
+  case 5:
+    s.Content[p].Vague = 6
+    s.Content[p].SpeedY = -s.Content[p].ScaleY
+    deplacementVague(s,false,p)
+  case 4:
+  s.Content[p].Vague = 0
+  case 3:
+  s.Content[p].Vague = 4
+  s.Content[p].SpeedY = +s.Content[p].ScaleY
+  case 2:
+    s.Content[p].Vague = 3
   case 1:
     s.Content[p].Vague = 2
     s.Content[p].SpeedY = -s.Content[p].ScaleY
     deplacementVague(s,true, p)
 
-  case 2:
-    s.Content[p].Vague = 3
-
-  case 3:
-    s.Content[p].Vague = 4
-    s.Content[p].SpeedY = +s.Content[p].ScaleY
-
-  case 4:
-  s.Content[p].Vague = 0
-
-  case 5:
-    s.Content[p].Vague = 6
-    s.Content[p].SpeedY = -s.Content[p].ScaleY
-    deplacementVague(s,false,p)
-
-  case 6:
-    s.Content[p].Vague = 7
-
-  case 7:
-    s.Content[p].Vague = 8
-    s.Content[p].SpeedY = +s.Content[p].ScaleY
-
-  case 8:
-    s.Content[p].Vague = 0
+  case 0:
+    s.Content[p].SpeedY = 0
   }
 }
 
 
 func deplacementVague(s *System, gauche bool, p int)  {
   if gauche && p-18 >= 0{
-    s.Content[p-18].Vague = 1
+    s.Content[p-18].Vague = 10
   }
   if !gauche && p+18 < len(s.Content){
-    s.Content[p+18].Vague = 5
+    s.Content[p+18].Vague = 9
   }
 }
 

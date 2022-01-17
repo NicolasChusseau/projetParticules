@@ -39,7 +39,7 @@ func NewSystem() System {
 		for i := 0; i < config.General.InitNumParticles; i++ {
 			p := Particle{
 				ScaleX:    3, ScaleY: 1,
-				PositionX: rand.Float64() * float64(config.General.WindowSizeX),
+				PositionX: float64(rand.Intn(100)*8),
 				PositionY: -1,
 				ColorRed: 0.5, ColorGreen: 0.5, ColorBlue: 0.5,
 				Opacity: 1,
