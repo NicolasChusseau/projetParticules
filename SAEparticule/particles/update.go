@@ -26,6 +26,8 @@ func (s *System) Update() {
         for i := 0; i < s.Separation; i++ {
           s.Content[int(s.Content[p].PositionX/s.Content[0].ScaleX*18)+i-1].Vague = 10
           s.Content[int(s.Content[p].PositionX/s.Content[0].ScaleX*18)+i+17].Vague = 5
+          s.Content[int(s.Content[p].PositionX/s.Content[0].ScaleX*18)+i-1].Caillou = p
+          s.Content[int(s.Content[p].PositionX/s.Content[0].ScaleX*18)+i+17].Caillou = p
         }
       }
     }
@@ -45,7 +47,7 @@ func (s *System) Update() {
 				PositionY: -1,
 				ColorRed: 0.5, ColorGreen: 0.5, ColorBlue: 0.5,
 				Opacity: 1,
-				SpeedX: 0, SpeedY: 2,
+				SpeedX: 0, SpeedY: 5,
       })
     }
   }else { //Cette boucle est utilisé lorsque le maximum de particules à été atteint ou dépassé. Ici, on recycle les particules qui ne sont plus visible, celles qui sont sortie de l'écran
@@ -62,7 +64,7 @@ func (s *System) Update() {
   				PositionY: -1,
   				ColorRed: 0.5, ColorGreen: 0.5, ColorBlue: 0.5,
   				Opacity: 1,
-  				SpeedX: 0, SpeedY: 2,
+  				SpeedX: 0, SpeedY: 5,
         }
       }
     }
@@ -106,50 +108,77 @@ func Vague(s *System, p int){
     return
   case 7:
     s.Content[p].Vague = 8
-    s.Content[p].SpeedY = +s.Content[p].ScaleY
+    if s.Content[p].Caillou != 0 && proche(s.Content[p].PositionX, s.Content[s.Content[p].Caillou].PositionX)  {
+      s.Content[p].SpeedY = 4*s.Content[p].ScaleY
+    }else {
+      s.Content[p].SpeedY = s.Content[p].ScaleY
+    }
     return
   case 6:
     s.Content[p].Vague = 7
     return
   case 5:
     s.Content[p].Vague = 6
-    s.Content[p].SpeedY = -s.Content[p].ScaleY
-    deplacementVague(s,false,p)
+    deplacementVague(s,false,p, s.Content[p].Caillou)
+    if s.Content[p].Caillou != 0 && proche(s.Content[p].PositionX, s.Content[s.Content[p].Caillou].PositionX)  {
+      s.Content[p].SpeedY = -4*s.Content[p].ScaleY
+    }else {
+      s.Content[p].SpeedY = -s.Content[p].ScaleY
+    }
     return
   case 4:
   s.Content[p].Vague = 0
   return
   case 3:
   s.Content[p].Vague = 4
-  s.Content[p].SpeedY = +s.Content[p].ScaleY
+  if s.Content[p].Caillou != 0 && proche(s.Content[p].PositionX, s.Content[s.Content[p].Caillou].PositionX)  {
+    s.Content[p].SpeedY = 4*s.Content[p].ScaleY
+  }else {
+    s.Content[p].SpeedY = s.Content[p].ScaleY
+  }
   return
   case 2:
     s.Content[p].Vague = 3
     return
   case 1:
     s.Content[p].Vague = 2
-    s.Content[p].SpeedY = -s.Content[p].ScaleY
-    deplacementVague(s,true, p)
+    deplacementVague(s,true, p, s.Content[p].Caillou)
+    if s.Content[p].Caillou != 0 && proche(s.Content[p].PositionX, s.Content[s.Content[p].Caillou].PositionX)  {
+      s.Content[p].SpeedY = -4*s.Content[p].ScaleY
+    }else {
+      s.Content[p].SpeedY = -s.Content[p].ScaleY
+    }
     return
   case 0:
     s.Content[p].SpeedY = 0
+    s.Content[p].Caillou = 0
     return
   }
 }
 
 
-func deplacementVague(s *System, gauche bool, p int)  {
+func deplacementVague(s *System, gauche bool, p int, c int)  {
   if gauche && p-36 >= 0{
     s.Content[p-36].Vague = 10
+    s.Content[p].Caillou = c
     return
   }
   if !gauche && p+18 < len(s.Content){
     s.Content[p+18].Vague = 9
+    s.Content[p].Caillou = c
     return
   }
 }
 
-
+func proche(pos1, pos2 float64) bool {
+  if pos1 < pos2{
+    return proche(pos2, pos1)
+  }
+  if pos1-pos2<=float64(config.General.WindowSizeX)/4{
+    return true
+  }
+  return false
+}
 
 
 

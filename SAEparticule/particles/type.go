@@ -25,4 +25,5 @@ type Particle struct {
 	SpeedX, SpeedY									float64
 	NonVisible										  bool
 	Vague														int
+	Caillou													int
 }

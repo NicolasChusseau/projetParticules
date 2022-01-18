@@ -43,7 +43,7 @@ func NewSystem() System {
 				PositionY: -1,
 				ColorRed: 0.5, ColorGreen: 0.5, ColorBlue: 0.5,
 				Opacity: 1,
-				SpeedX: 0, SpeedY: 2,
+				SpeedX: 0, SpeedY: 5,
 			}
 			sus.Content = append(sus.Content, p)
 		}
