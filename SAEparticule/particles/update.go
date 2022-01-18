@@ -24,7 +24,7 @@ func (s *System) Update() {
       s.Content[p].Opacity = 0
       if s.Content[p].PositionX > 0 && s.Content[p].PositionX < 800 {
         for i := 0; i < s.Separation; i++ {
-          s.Content[int(s.Content[p].PositionX/s.Content[0].ScaleX*18)+i-1].Vague = 1
+          s.Content[int(s.Content[p].PositionX/s.Content[0].ScaleX*18)+i-1].Vague = 10
           s.Content[int(s.Content[p].PositionX/s.Content[0].ScaleX*18)+i+17].Vague = 5
         }
       }
@@ -97,43 +97,55 @@ func Vague(s *System, p int){
   switch s.Content[p].Vague {
   case 10:
     s.Content[p].Vague = 1
+    return
   case 9:
     s.Content[p].Vague = 5
+    return
   case 8:
     s.Content[p].Vague = 0
+    return
   case 7:
     s.Content[p].Vague = 8
     s.Content[p].SpeedY = +s.Content[p].ScaleY
+    return
   case 6:
     s.Content[p].Vague = 7
+    return
   case 5:
     s.Content[p].Vague = 6
     s.Content[p].SpeedY = -s.Content[p].ScaleY
     deplacementVague(s,false,p)
+    return
   case 4:
   s.Content[p].Vague = 0
+  return
   case 3:
   s.Content[p].Vague = 4
   s.Content[p].SpeedY = +s.Content[p].ScaleY
+  return
   case 2:
     s.Content[p].Vague = 3
+    return
   case 1:
     s.Content[p].Vague = 2
     s.Content[p].SpeedY = -s.Content[p].ScaleY
     deplacementVague(s,true, p)
-
+    return
   case 0:
     s.Content[p].SpeedY = 0
+    return
   }
 }
 
 
 func deplacementVague(s *System, gauche bool, p int)  {
-  if gauche && p-18 >= 0{
-    s.Content[p-18].Vague = 10
+  if gauche && p-36 >= 0{
+    s.Content[p-36].Vague = 10
+    return
   }
   if !gauche && p+18 < len(s.Content){
     s.Content[p+18].Vague = 9
+    return
   }
 }
 

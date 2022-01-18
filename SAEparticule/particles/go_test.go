@@ -103,7 +103,7 @@ func TestMaxParticles(t *testing.T)  {
     t.Fail()
   }
 }
-
+/*
 func TestEstNonVisible(t *testing.T)  {
   config.General.WindowSizeX=5
   config.General.WindowSizeY=5
@@ -119,9 +119,65 @@ func TestEstNonVisible(t *testing.T)  {
   if !EstNonVisible(p){
     t.Fail()
   }
+}*/
+
+func TestVague1(t *testing.T)  {
+  config.General.WindowSizeX=800
+  config.General.WindowSizeY=600
+  config.General.MaxParticles=9999
+  config.General.InitNumParticles=1
+  s := NewSystem()
+  s.Content[18].Vague=10
+  s.Update()
+  if s.Content[18].Vague != 1 {
+    t.Fail()
+  }
+  s.Update()
+  if s.Content[18].Vague != 2 {
+    t.Fail()
+  }
+  s.Update()
+  if s.Content[18].Vague != 3 {
+    t.Fail()
+  }
+  s.Update()
+  if s.Content[18].Vague != 4 {
+    t.Fail()
+  }
+  s.Update()
+  if s.Content[18].Vague != 0 {
+    t.Fail()
+  }
 }
 
-
+func TestVague2(t *testing.T)  {
+  config.General.WindowSizeX=800
+  config.General.WindowSizeY=600
+  config.General.MaxParticles=9999
+  config.General.InitNumParticles=1
+  s := NewSystem()
+  s.Content[18].Vague=9
+  s.Update()
+  if s.Content[18].Vague != 5 {
+    t.Fail()
+  }
+  s.Update()
+  if s.Content[18].Vague != 6 {
+    t.Fail()
+  }
+  s.Update()
+  if s.Content[18].Vague != 7 {
+    t.Fail()
+  }
+  s.Update()
+  if s.Content[18].Vague != 8 {
+    t.Fail()
+  }
+  s.Update()
+  if s.Content[18].Vague != 0 {
+    t.Fail()
+  }
+}
 
 
 
