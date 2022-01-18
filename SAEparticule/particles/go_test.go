@@ -35,16 +35,17 @@ func TestUpdate1(t *testing.T)  {
   config.General.SpawnY = 50
   config.General.MaxParticles=6513204651320
   s := NewSystem()
+  var particule_bleu int = 2400
   config.General.SpawnRate = 1
   s.Update()
-  if float64(len(s.Content)) != 6{
+  if len(s.Content) != 6+particule_bleu{
     t.Fail()
   }
   s.Update()
   s.Update()
   s.Update()
   s.Update()
-  if float64(len(s.Content)) != 10{
+  if len(s.Content) != 10+particule_bleu{
     t.Fail()
   }
 }
@@ -52,17 +53,18 @@ func TestUpdate1(t *testing.T)  {
 
 func TestUpdate2(t *testing.T)  {
   s := NewSystem()
+  var particule_bleu int = 2400
   config.General.SpawnRate = 2.5
   config.General.MaxParticles=6513204651320
   s.Update()
-  if len(s.Content) != 7{
+  if len(s.Content) != 7+particule_bleu{
     t.Fail()
   }
   s.Update()
   s.Update()
   s.Update()
   s.Update()
-  if float64(len(s.Content)) != 17{
+  if len(s.Content) != 17+particule_bleu{
     t.Fail()
   }
 }
@@ -81,25 +83,26 @@ func TestUpdate3(t* testing.T)  {
 
 func TestMaxParticles(t *testing.T)  {
   config.General.InitNumParticles=50
-  config.General.WindowSizeX=1000
-  config.General.WindowSizeY=1000
+  config.General.WindowSizeX=100
+  config.General.WindowSizeY=100
   config.General.SpawnRate=10
-  config.General.MaxParticles=60
+  var particule_bleu int = 2400
+  config.General.MaxParticles=particule_bleu+80
   s := NewSystem()
   s.Update()
-  if len(s.Content) != 60{
+  if len(s.Content) != particule_bleu+60{
     t.Fail()
   }
   s.Update()
-  if len(s.Content) != 60{
+  if len(s.Content) != particule_bleu+70{
     t.Fail()
   }
   s.Update()
-  if len(s.Content) != 60{
+  if len(s.Content) != particule_bleu+80{
     t.Fail()
   }
   s.Update()
-  if len(s.Content) != 60{
+  if len(s.Content) != particule_bleu+80{
     t.Fail()
   }
 }
