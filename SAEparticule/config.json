@@ -8,7 +8,7 @@
 	"RandomSpawn": true,
 	"SpawnX": 400,
 	"SpawnY": 550,
-	"SpawnRate": 0.005,
+	"SpawnRate": 0.007,
 	"MaxParticles": 2000,
 	"Gravite": 0
 }
