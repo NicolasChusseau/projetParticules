@@ -55,7 +55,7 @@ func (s *System) Update() {
       if indice != len(s.Content){ //Cette condiction permet de vérifier si une particule à été trouvé ou non (si indice==len(s.Content) alors toutes les particules sont encore visible à l'écran)
         spdX := rand.Float64()
         spdX -= 0.5
-        spdY := rand.Float64() * 2
+        spdY := rand.Float64() * 10
         s.Content[indice] = Particle{
           PositionX: float64(config.General.SpawnX),
           PositionY: float64(config.General.SpawnY),
