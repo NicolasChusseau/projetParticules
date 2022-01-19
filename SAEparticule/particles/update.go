@@ -18,6 +18,7 @@ func (s *System) Update() {
     s.Content[p].PositionX += s.Content[p].SpeedX
     s.Content[p].PositionY += s.Content[p].SpeedY
     s.Content[p].SpeedY += config.General.Gravite
+    s.Content[p].Vie -= 1
     if s.Content[p].SpeedY < 0{
       s.Content[p].Opacity -= 0.01
     }else {
@@ -25,6 +26,10 @@ func (s *System) Update() {
       s.Content[p].Opacity += 10
     }
     s.Content[p].NonVisible = EstNonVisible(s.Content[p])
+    if s.Content[p].Vie < 0{
+      s.Content[p].NonVisible = true
+      s.Content[p].Opacity = 0
+    }
   }
   log.Println(len(s.Content))
 
@@ -43,6 +48,7 @@ func (s *System) Update() {
         ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
         Opacity: 1,
         SpeedX: spdX * 10, SpeedY: -(spdY+5),
+        Vie:150,
       })
     }
   }else { //Cette boucle est utilisé lorsque le maximum de particules à été atteint ou dépassé. Ici, on recycle les particules qui ne sont plus visible, celles qui sont sortie de l'écran
@@ -63,6 +69,7 @@ func (s *System) Update() {
           ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
           Opacity: 1,
           SpeedX: spdX * 10, SpeedY: -(spdY+5),
+          Vie:150,
         }
       }
     }
