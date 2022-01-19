@@ -26,10 +26,11 @@ func (s *System) Update() {
       s.Content[p].Opacity += 10
     }
     s.Content[p].NonVisible = EstNonVisible(s.Content[p])
-    if s.Content[p].Vie < 0{
+    if s.Content[p].Vie < -1110{
       s.Content[p].NonVisible = true
       s.Content[p].Opacity = 0
     }
+    Collision(s,p)
   }
   log.Println(len(s.Content))
 
@@ -83,11 +84,38 @@ func EstNonVisible(p Particle) bool {
   return false
 }
 
+func Collision(s *System, p int)  {
+  for i := range s.Content {
+    if i != p{
+      if procheX(s,i,p) && procheY(s,i,p)  {
+        s.Content[i].SpeedX = -s.Content[i].SpeedX
+        s.Content[i].SpeedY = -s.Content[i].SpeedY
+        s.Content[p].SpeedX = -s.Content[p].SpeedX
+        s.Content[p].SpeedY = -s.Content[p].SpeedY
+      }
+    }
+  }
+}
 
+func procheX(s *System, p1, p2 int) bool {
+  if s.Content[p1].PositionX < s.Content[p2].PositionX {
+    return procheX(s,p2,p1)
+  }
+  if s.Content[p1].PositionX - s.Content[p2].PositionX < s.Content[p1].ScaleX {
+    return true
+  }
+  return false
+}
 
-
-
-
+func procheY(s *System, p1, p2 int) bool {
+  if s.Content[p1].PositionY < s.Content[p2].PositionY {
+    return procheY(s,p2,p1)
+  }
+  if s.Content[p1].PositionY - s.Content[p2].PositionY < s.Content[p1].ScaleY{
+    return true
+  }
+  return false
+}
 
 
 
