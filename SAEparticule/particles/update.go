@@ -13,6 +13,7 @@ import (
 // projet.
 // C'est à vous de développer cette fonction.
 //Dans cette fonction, il a été décidé de respecter le MaxParticles avant le SpawnRate, il est conseillé d'avoir un maximum de particule au moins 200 fois supérieur au spawnrate si le temps de vie est autour de 150.
+//Une fois le MaxParticles atteint, plus aucune particules n'est créé car les particules sont recyclées
 func (s *System) Update() {
   for p,_ := range s.Content { //cette boucle sert à modifier les paramètres des particules et à vérifier si elles toujours visible à l'écran
     if !s.Content[p].NonVisible{
@@ -31,16 +32,16 @@ func (s *System) Update() {
         s.Content[p].NonVisible = true
         s.Content[p].Opacity = -5000
       }
-      if !config.General.Rebonds {
-        if EstNonVisible(s.Content[p]){
+      if !config.General.Rebonds { // si les rebonds ne sont pas activés
+        if EstNonVisible(s.Content[p]){ //test de la visibilité de la particule
           s.Content[p].NonVisible = true
-          s.Content[p].Opacity = -5000
+          s.Content[p].Opacity = -5000 //on met une opacité négative pour que la particule ne soit plus visible à l'écran sur les bords si elle avait une rotation
         }
-      }else {
-        if s.Content[p].PositionX >= float64(config.General.WindowSizeX) || s.Content[p].PositionX <= -s.Content[p].ScaleX{
+      }else { //si les rebonds sont activés, on test si elle touche un bord et on inverse la vitesse correspondante (les rebonds ne sont pas forcément fluides et cohérents si la particule à une rotation)
+        if s.Content[p].PositionX >= float64(config.General.WindowSizeX)-s.Content[p].ScaleX || s.Content[p].PositionX <= 0{
           s.Content[p].SpeedX = -s.Content[p].SpeedX
         }
-        if s.Content[p].PositionY >= float64(config.General.WindowSizeY) || s.Content[p].PositionY <= -s.Content[p].ScaleY   {
+        if s.Content[p].PositionY >= float64(config.General.WindowSizeY)-s.Content[p].ScaleY || s.Content[p].PositionY <= 0   {
           s.Content[p].SpeedY = -s.Content[p].SpeedY
         }
       }
@@ -54,18 +55,30 @@ func (s *System) Update() {
   if config.General.MaxParticles > len(s.Content){  //On respecte le maximum de particules avant de respecter le spawnrate. Le maximum de particules peut être dépassé mais il ne le sera jamais plus que le SpawnRate
     for s.Spawnrate >= 1{ //Cette boucle sert à ajouter les particules en fonction du spawnrate
       s.Spawnrate -= 1
-      spdX := rand.Float64()
-      spdX -= 0.5
-      spdY := rand.Float64() * 10
-      s.Content = append(s.Content, Particle{
-        PositionX: float64(config.General.SpawnX),
-        PositionY: float64(config.General.SpawnY),
-        ScaleX:	1, ScaleY: 1,
-        ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
-        Opacity: 1,
-        SpeedX: spdX * 10, SpeedY: -(spdY+5),
-        Vie:config.General.TempsVie,
-      })
+      if !config.General.Vitesse{
+        spdX := rand.Float64()
+        spdX -= 0.5
+        spdY := rand.Float64() * 10
+        s.Content = append(s.Content, Particle{
+          PositionX: float64(config.General.SpawnX),
+          PositionY: float64(config.General.SpawnY),
+          ScaleX:	config.General.Taille, ScaleY: config.General.Taille,
+          ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
+          Opacity: 1,
+          SpeedX: spdX * 10, SpeedY: -(spdY+5),
+          Vie:config.General.TempsVie,
+        })
+      }else {
+        s.Content = append(s.Content, Particle{
+          PositionX: float64(config.General.SpawnX),
+          PositionY: float64(config.General.SpawnY),
+          ScaleX:	config.General.Taille, ScaleY: config.General.Taille,
+          ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
+          Opacity: 1,
+          SpeedX: config.General.VitesseX, SpeedY: config.General.VitesseY,
+          Vie:config.General.TempsVie,
+        })
+      }
     }
   }else { //Cette boucle est utilisé lorsque le maximum de particules à été atteint ou dépassé. Ici, on recycle les particules qui ne sont plus visible, celles qui sont sortie de l'écran
     for s.Spawnrate >= 1{
@@ -75,25 +88,42 @@ func (s *System) Update() {
         indice ++
       }
       if indice != len(s.Content){ //Cette condiction permet de vérifier si une particule à été trouvé ou non (si indice==len(s.Content) alors toutes les particules sont encore visible à l'écran)
-        spdX := rand.Float64()
-        spdX -= 0.5
-        spdY := rand.Float64() * 10
-        s.Content[indice] = Particle{
-          PositionX: float64(config.General.SpawnX),
-          PositionY: float64(config.General.SpawnY),
-          ScaleX:	1, ScaleY: 1,
-          ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
-          Opacity: 1,
-          SpeedX: spdX * 10, SpeedY: -(spdY+5),
-          Vie:config.General.TempsVie,
+        if !config.General.Vitesse{
+          spdX := rand.Float64()
+          spdX -= 0.5
+          spdY := rand.Float64() * 10
+          s.Content[indice] = Particle{
+            PositionX: float64(config.General.SpawnX),
+            PositionY: float64(config.General.SpawnY),
+            ScaleX:	config.General.Taille, ScaleY: config.General.Taille,
+            ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
+            Opacity: 1,
+            SpeedX: spdX * 10, SpeedY: -(spdY+5),
+            Vie:config.General.TempsVie,
+          }
+        }else {
+          s.Content[indice] = Particle{
+            PositionX: float64(config.General.SpawnX),
+            PositionY: float64(config.General.SpawnY),
+            ScaleX:	config.General.Taille, ScaleY: config.General.Taille,
+            ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
+            Opacity: 1,
+            SpeedX: config.General.VitesseX, SpeedY: config.General.VitesseY,
+            Vie:config.General.TempsVie,
+          }
         }
       }
     }
   }
 }
 
+
+
+/*
+Retourne vrai si la particle est sortie de l'écran de 5 fois sa taille
+*/
 func EstNonVisible(p Particle) bool {
-  if p.PositionX >= float64(config.General.WindowSizeX) || p.PositionX <= -10 || p.PositionY >= float64(config.General.WindowSizeY) || p.PositionY <= -10{
+  if p.PositionX+5*p.ScaleX >= float64(config.General.WindowSizeX) || p.PositionX <= -5*p.ScaleX || p.PositionY >= float64(config.General.WindowSizeY)+5*p.ScaleY || p.PositionY <= -5*p.ScaleY{
     return true
   }
   return false

@@ -20,6 +20,10 @@ type Config struct {
 	Gravite									 float64
 	Rebonds								   bool
 	TempsVie 								 int
+	Taille									 float64
+	Vitesse									 bool
+	VitesseX								 float64
+	VitesseY								 float64
 }
 
 var General Config

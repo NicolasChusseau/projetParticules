@@ -4,13 +4,17 @@
   "WindowSizeY": 600,
 	"ParticleImage": "assets/particle.png",
 	"Debug": true,
-	"InitNumParticles": 10,
+	"InitNumParticles": 0,
 	"RandomSpawn": false,
-	"SpawnX": 400,
+	"SpawnX": 0,
 	"SpawnY": 550,
-	"SpawnRate": 2,
-	"MaxParticles": 400,
-	"Gravite": 0.05,
+	"SpawnRate": 10,
+	"MaxParticles": 40000,
+	"Gravite": 0.5,
 	"Rebonds":true,
-	"TempsVie":150
+	"TempsVie":800,
+	"Taille": 1,
+	"Vitesse":true,
+	"VitesseX":1,
+	"VitesseY":5
 }

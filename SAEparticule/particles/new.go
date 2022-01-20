@@ -18,29 +18,54 @@ func NewSystem() System {
 	if rand.Float64() > 0.5{
 		spdX = -spdX
 	}
+	var p Particle
 	if config.General.RandomSpawn{ //Initialisation des positions de départ des premières particules aléatoires
 		for i := 0; i < config.General.InitNumParticles; i++ {
-			p := Particle{
-				PositionX: rand.Float64() * float64(config.General.WindowSizeX),
-				PositionY: rand.Float64() * float64(config.General.WindowSizeY),
-				ScaleX:    1, ScaleY: 1,
-				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
-				Opacity: 1,
-				SpeedX: spdX, SpeedY: -5,
-				Vie:config.General.TempsVie,
+			if config.General.Vitesse {
+				p = Particle{
+					PositionX: rand.Float64() * float64(config.General.WindowSizeX),
+					PositionY: rand.Float64() * float64(config.General.WindowSizeY),
+					ScaleX:    config.General.Taille, ScaleY: config.General.Taille,
+					ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
+					Opacity: 1,
+					SpeedX: config.General.VitesseX, SpeedY: config.General.VitesseY,
+					Vie:config.General.TempsVie,
+				}
+			}else {
+				p = Particle{
+					PositionX: rand.Float64() * float64(config.General.WindowSizeX),
+					PositionY: rand.Float64() * float64(config.General.WindowSizeY),
+					ScaleX:    config.General.Taille, ScaleY: config.General.Taille,
+					ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
+					Opacity: 1,
+					SpeedX: spdX, SpeedY: -5,
+					Vie:config.General.TempsVie,
+				}
 			}
 			sus.Content = append(sus.Content, p)
 		}
 	}else{
 		for i := 0; i < config.General.InitNumParticles; i++ {
-			p := Particle{
-				PositionX: float64(config.General.SpawnX),
-				PositionY: float64(config.General.SpawnY),
-				ScaleX:	1, ScaleY: 1,
-				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
-				Opacity: 1,
-				SpeedX: spdX * 5, SpeedY: -5,
-				Vie:config.General.TempsVie,
+			if config.General.Vitesse {
+				p = Particle{
+					PositionX: rand.Float64() * float64(config.General.WindowSizeX),
+					PositionY: rand.Float64() * float64(config.General.WindowSizeY),
+					ScaleX:    config.General.Taille, ScaleY: config.General.Taille,
+					ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
+					Opacity: 1,
+					SpeedX: config.General.VitesseX, SpeedY: config.General.VitesseY,
+					Vie:config.General.TempsVie,
+				}
+			}else {
+				p = Particle{
+					PositionX: float64(config.General.SpawnX),
+					PositionY: float64(config.General.SpawnY),
+					ScaleX:	config.General.Taille, ScaleY: config.General.Taille,
+					ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
+					Opacity: 1,
+					SpeedX: spdX * 5, SpeedY: -5,
+					Vie:config.General.TempsVie,
+				}
 			}
 			sus.Content = append(sus.Content, p)
 		}
