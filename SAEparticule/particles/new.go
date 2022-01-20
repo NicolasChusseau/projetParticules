@@ -27,7 +27,7 @@ func NewSystem() System {
 				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
 				Opacity: 1,
 				SpeedX: spdX, SpeedY: -5,
-				Vie:600,
+				Vie:config.General.TempsVie,
 			}
 			sus.Content = append(sus.Content, p)
 		}
@@ -40,7 +40,7 @@ func NewSystem() System {
 				ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
 				Opacity: 1,
 				SpeedX: spdX * 5, SpeedY: -5,
-				Vie:600,
+				Vie:config.General.TempsVie,
 			}
 			sus.Content = append(sus.Content, p)
 		}

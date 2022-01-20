@@ -18,7 +18,8 @@ type Config struct {
 	SpawnRate                float64
 	MaxParticles						 int
 	Gravite									 float64
-	SpawnCarre							 bool
+	Rebonds								   bool
+	TempsVie 								 int
 }
 
 var General Config

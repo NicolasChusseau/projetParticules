@@ -8,7 +8,9 @@
 	"RandomSpawn": false,
 	"SpawnX": 400,
 	"SpawnY": 550,
-	"SpawnRate": 0.5,
-	"MaxParticles": 1000,
-	"Gravite": 0.05
+	"SpawnRate": 2,
+	"MaxParticles": 400,
+	"Gravite": 0.05,
+	"Rebonds":true,
+	"TempsVie":150
 }

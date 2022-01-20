@@ -12,26 +12,41 @@ import (
 // 60 fois par seconde (de manière régulière) par la fonction principale du
 // projet.
 // C'est à vous de développer cette fonction.
-//Dans cette fonction, il a été décidé de respecter le MaxParticles avant le SpawnRate, il est conseillé d'avoir un maximum de particule au moins 100 fois supérieur au spawnrate.
+//Dans cette fonction, il a été décidé de respecter le MaxParticles avant le SpawnRate, il est conseillé d'avoir un maximum de particule au moins 200 fois supérieur au spawnrate si le temps de vie est autour de 150.
 func (s *System) Update() {
   for p,_ := range s.Content { //cette boucle sert à modifier les paramètres des particules et à vérifier si elles toujours visible à l'écran
-    s.Content[p].PositionX += s.Content[p].SpeedX
-    s.Content[p].PositionY += s.Content[p].SpeedY
-    s.Content[p].SpeedY += config.General.Gravite
-    s.Content[p].Vie -= 1
-    if s.Content[p].SpeedY < 0{
-      s.Content[p].Opacity -= 0.01
-    }else {
-      s.Content[p].Rotation += 0.1
-      s.Content[p].Opacity += 10
+    if !s.Content[p].NonVisible{
+      s.Content[p].PositionX += s.Content[p].SpeedX
+      s.Content[p].PositionY += s.Content[p].SpeedY
+      s.Content[p].SpeedY += config.General.Gravite
+      s.Content[p].Vie -= 1
+      if s.Content[p].SpeedY < 0{
+        s.Content[p].Opacity = 1
+        s.Content[p].Rotation = 0
+      }else {
+          s.Content[p].Rotation += 0.1
+          s.Content[p].Opacity += 10
+      }
+      if s.Content[p].Vie < -0 {
+        s.Content[p].NonVisible = true
+        s.Content[p].Opacity = -5000
+      }
+      if !config.General.Rebonds {
+        if EstNonVisible(s.Content[p]){
+          s.Content[p].NonVisible = true
+          s.Content[p].Opacity = -5000
+        }
+      }else {
+        if s.Content[p].PositionX >= float64(config.General.WindowSizeX) || s.Content[p].PositionX <= -s.Content[p].ScaleX{
+          s.Content[p].SpeedX = -s.Content[p].SpeedX
+        }
+        if s.Content[p].PositionY >= float64(config.General.WindowSizeY) || s.Content[p].PositionY <= -s.Content[p].ScaleY   {
+          s.Content[p].SpeedY = -s.Content[p].SpeedY
+        }
+      }
     }
-    s.Content[p].NonVisible = EstNonVisible(s.Content[p])
-    if s.Content[p].Vie < -1110{
-      s.Content[p].NonVisible = true
-      s.Content[p].Opacity = 0
-    }
-    Collision(s,p)
   }
+
   log.Println(len(s.Content))
 
   s.Spawnrate += config.General.SpawnRate
@@ -49,7 +64,7 @@ func (s *System) Update() {
         ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
         Opacity: 1,
         SpeedX: spdX * 10, SpeedY: -(spdY+5),
-        Vie:150,
+        Vie:config.General.TempsVie,
       })
     }
   }else { //Cette boucle est utilisé lorsque le maximum de particules à été atteint ou dépassé. Ici, on recycle les particules qui ne sont plus visible, celles qui sont sortie de l'écran
@@ -70,7 +85,7 @@ func (s *System) Update() {
           ColorRed: rand.Float64(), ColorGreen: rand.Float64(), ColorBlue: rand.Float64(),
           Opacity: 1,
           SpeedX: spdX * 10, SpeedY: -(spdY+5),
-          Vie:150,
+          Vie:config.General.TempsVie,
         }
       }
     }
@@ -84,38 +99,10 @@ func EstNonVisible(p Particle) bool {
   return false
 }
 
-func Collision(s *System, p int)  {
-  for i := range s.Content {
-    if i != p{
-      if procheX(s,i,p) && procheY(s,i,p)  {
-        s.Content[i].SpeedX = -s.Content[i].SpeedX
-        s.Content[i].SpeedY = -s.Content[i].SpeedY
-        s.Content[p].SpeedX = -s.Content[p].SpeedX
-        s.Content[p].SpeedY = -s.Content[p].SpeedY
-      }
-    }
-  }
-}
 
-func procheX(s *System, p1, p2 int) bool {
-  if s.Content[p1].PositionX < s.Content[p2].PositionX {
-    return procheX(s,p2,p1)
-  }
-  if s.Content[p1].PositionX - s.Content[p2].PositionX < s.Content[p1].ScaleX {
-    return true
-  }
-  return false
-}
 
-func procheY(s *System, p1, p2 int) bool {
-  if s.Content[p1].PositionY < s.Content[p2].PositionY {
-    return procheY(s,p2,p1)
-  }
-  if s.Content[p1].PositionY - s.Content[p2].PositionY < s.Content[p1].ScaleY{
-    return true
-  }
-  return false
-}
+
+
 
 
 
