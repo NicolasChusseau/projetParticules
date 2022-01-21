@@ -18,15 +18,11 @@ func (s *System) Update() {
   rand.Seed(time.Now().UnixNano())
   for p,_ := range s.Content { //cette boucle sert à modifier les paramètres des particules et à vérifier si elles toujours visible à l'écran
     ecartX := s.Content[p].PositionX - float64(config.General.WindowSizeX)/2
-    log.Println(float64(config.General.WindowSizeX)/2)
-    log.Println(float64(config.General.WindowSizeX)/2 + s.Content[p].Radius)
-    log.Println(float64(config.General.WindowSizeX)/2 - s.Content[p].Radius)
-    if ecartX >= float64(config.General.WindowSizeX)/2 + s.Content[p].Radius || ecartX <= float64(config.General.WindowSizeX)/2 - s.Content[p].Radius {
+    if ecartX >= s.Content[p].Radius || ecartX <= -s.Content[p].Radius{
       s.Content[p].SpeedX = -s.Content[p].SpeedX
     }
 
-    log.Println(ecartX)
-    ecartY := math.Pow(math.Pow(s.Content[p].Radius, 2) - math.Pow(ecartX, 2), 1/2)
+    ecartY := (math.Pow(s.Content[p].Radius, 2) - math.Pow(ecartX, 2))/500
     if s.Content[p].SpeedX < 0 {
       s.Content[p].PositionY = s.Content[p].PositionYinit - ecartY
     }else{
@@ -36,7 +32,7 @@ func (s *System) Update() {
 
   }
 
-  log.Println(s.Content[0])
+  log.Println(len(s.Content))
 }
 
 

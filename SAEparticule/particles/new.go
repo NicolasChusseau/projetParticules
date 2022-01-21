@@ -16,8 +16,8 @@ func NewSystem() System {
 	for i := 0; i < config.General.InitNumParticles; i++ {
 		rand.Seed(time.Now().UnixNano())
 		posY := rand.Float64() * float64(config.General.WindowSizeY)
-		rad := (rand.Float64()*100+100)*(1-posY/float64(config.General.WindowSizeY))
-		col := rand.Float64()/2
+		rad := (posY/float64(config.General.WindowSizeY))*100
+		col := rand.Float64()/2+0.5
 		p := Particle{
 			PositionX: rand.Float64()*200+float64(config.General.WindowSizeY)/2,
 			PositionYinit: posY,
