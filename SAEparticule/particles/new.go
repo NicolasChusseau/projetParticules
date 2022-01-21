@@ -12,12 +12,11 @@ import (
 // Dans sa version actuelle, cette fonction affiche une particule blanche au
 // centre de l'écran.
 func NewSystem() System {
-	switch config.General.Configuration {
+	switch config.General.Configuration { //Choix du système créé par rapport à la configuration. Si aucune configuration n'est choisi, la configuration main est choisit par défaut
 	case "main":
 		return system_main()
-	case "neige": //Dans ce cas, les particules sont recyclées dès qu'elles fondent. De ce fait, le MaxParticles est obselètes. C'est pourquoi on les met à 666666666666. La taille fixé ne sera pas respecté car l'image utilisé ne fait pas 1px par 1px.
+	case "neige": //Si on choisi la configuration neige, il ne faut pas oublier de changer ParticleImage
 	  config.General.WindowTitle = "Il neige !"
-	  config.General.ParticleImage = "assets/flocon.png"
 		config.General.MaxParticles = 666666666666
 		return system_neige()
 	case "plouf":
@@ -29,7 +28,9 @@ func NewSystem() System {
 }
 
 
-
+/*
+Création du système main
+*/
 func system_main() System {
 	sus := System{Content: []Particle{}}
 	rand.Seed(time.Now().UnixNano())
@@ -40,7 +41,7 @@ func system_main() System {
 	var p Particle
 	if config.General.RandomSpawn{ //Initialisation des positions de départ des premières particules aléatoires
 		for i := 0; i < config.General.InitNumParticles; i++ {
-			if config.General.Vitesse {
+			if config.General.Vitesse { //Si la Vitesse est défini alors on met VitesseX et VitesseY sur SpeedX et SpeedY
 				p = Particle{
 					PositionX: rand.Float64() * float64(config.General.WindowSizeX),
 					PositionY: rand.Float64() * float64(config.General.WindowSizeY),
@@ -92,15 +93,16 @@ func system_main() System {
 	return sus
 }
 
+//Création du système neige
 func system_neige() System {
 	sus := System{Content: []Particle{}}
 	rand.Seed(time.Now().UnixNano())
 	var p Particle
-	if config.General.RandomSpawn{
+	if config.General.RandomSpawn{ //Initialisation des positions de départ des premières particules aléatoires
 		for i := 0; i < config.General.InitNumParticles; i++ {
 			pX := rand.Float64() * float64(config.General.WindowSizeX)
 			pY := rand.Float64() * float64(config.General.WindowSizeY)
-			if config.General.Vitesse {
+			if config.General.Vitesse { //Si la Vitesse est défini alors on met VitesseX et VitesseY sur SpeedX et SpeedY
 				p = Particle{
 					PositionX: pX,
 					PositionY: pY,
@@ -162,7 +164,7 @@ func system_neige() System {
 	return sus
 }
 
-
+//Création du système plouf
 func system_plouf() System {
 	sus := System{Content: []Particle{}}
 	rand.Seed(time.Now().UnixNano())
@@ -171,7 +173,7 @@ func system_plouf() System {
 	var posX float64 = 0
 	var posY float64 = float64(config.General.WindowSizeY)-scaley
 	var p Particle
-	for posX < float64(config.General.WindowSizeX){
+	for posX < float64(config.General.WindowSizeX){ //Création des particules formant l'eau. Ces particules sont placées sur toute la largeur de l'écran et sur la quart de sa hauteur
 		p = Particle{
 			ScaleX:    scalex, ScaleY: scaley,
 			PositionX: posX,
@@ -187,7 +189,7 @@ func system_plouf() System {
 			posX += scalex
 		}
 	}
-	sus.Separation = len(sus.Content) /100
+	sus.Separation = len(sus.Content) /100 //Cette variable représente la séparation entre chaque colonne de particules d'eau
 	if config.General.RandomSpawn{ //Initialisation des positions de départ des premières particules aléatoires
 		for i := 0; i < config.General.InitNumParticles; i++ {
 			if config.General.Vitesse{
@@ -238,7 +240,7 @@ func system_plouf() System {
 	return sus
 }
 
-
+//Création du système tornade
 func system_tornade() System {
 	sus := System{Content: []Particle{}}
 	return sus
