@@ -34,7 +34,7 @@ func (s *System) Update() {
       scale := rand.Float64()*0.01
       s.Content[p] = Particle{
         PositionX: rand.Float64()*float64(config.General.WindowSizeX),
-        PositionY: -50,
+        PositionY: -2,
         ScaleX:	scale, ScaleY: scale,
         ColorRed: 1, ColorGreen: 1, ColorBlue: 1,
         Opacity: 1,

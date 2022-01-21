@@ -6,7 +6,7 @@
 	"ImgSizeX": 869,
 	"ImgSizeY": 980,
 	"Debug": true,
-	"InitNumParticles": 0,
+	"InitNumParticles": 10000,
 	"RandomSpawn": true,
 	"SpawnX": 400,
 	"SpawnY": 50,
