@@ -359,16 +359,16 @@ func Vague(s *System, p int){
     }
     return
   case 4:
-  s.Content[p].Vague = 0
-  return
+    s.Content[p].Vague = 0
+    return
   case 3:
-  s.Content[p].Vague = 4
-  if s.Content[p].Caillou != 0 && proche(s.Content[p].PositionX, s.Content[s.Content[p].Caillou].PositionX)  {
-    s.Content[p].SpeedY = 4*s.Content[p].ScaleY
-  }else {
-    s.Content[p].SpeedY = s.Content[p].ScaleY
-  }
-  return
+    s.Content[p].Vague = 4
+    if s.Content[p].Caillou != 0 && proche(s.Content[p].PositionX, s.Content[s.Content[p].Caillou].PositionX)  {
+      s.Content[p].SpeedY = 4*s.Content[p].ScaleY
+    }else {
+      s.Content[p].SpeedY = s.Content[p].ScaleY
+    }
+    return
   case 2:
     s.Content[p].Vague = 3
     return

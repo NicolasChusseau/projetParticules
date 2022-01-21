@@ -18,6 +18,7 @@ type System struct {
 //ajout de NonVisible qui permet de repérer les particules qui ne sont plus visible
 type Particle struct {
 	PositionX, PositionY            float64
+	PositionYinit										float64
 	Rotation                        float64
 	ScaleX, ScaleY                  float64
 	ColorRed, ColorGreen, ColorBlue float64
@@ -27,4 +28,5 @@ type Particle struct {
 	Vie 														int
 	Vague														int
 	Caillou													int
+	Radius													float64
 }
