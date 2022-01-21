@@ -16,11 +16,11 @@ type System struct {
 //ajout de SpeedX et SpeedY qui définissent la vitesse de déplacement de la particules en X et en Y
 //ajout de NonVisible qui permet de repérer les particules qui ne sont plus visible
 type Particle struct {
-	PositionX, PositionY            float64
-	Rotation                        float64
-	ScaleX, ScaleY                  float64
-	ColorRed, ColorGreen, ColorBlue float64
-	Opacity                         float64
-	SpeedX, SpeedY									float64
-	NonVisible										  bool
+	PositionX, PositionY, PositionYinit float64
+	Rotation                        		float64
+	ScaleX, ScaleY                  		float64
+	ColorRed, ColorGreen, ColorBlue 		float64
+	Opacity                         		float64
+	SpeedX, SpeedY											float64
+	Radius															float64
 }
