@@ -16,15 +16,13 @@ func NewSystem() System {
 	case "main":
 		return system_main()
 	case "neige": //Si on choisi la configuration neige, il ne faut pas oublier de changer ParticleImage
-	  config.General.WindowTitle = "Il neige !"
-		config.General.MaxParticles = 666666666666
 		return system_neige()
 	case "plouf":
 		return system_plouf()
 	case "tornade":
 		return system_tornade()
 	}
-		return system_main()
+	return system_main()
 }
 
 
@@ -243,8 +241,53 @@ func system_plouf() System {
 //Création du système tornade
 func system_tornade() System {
 	sus := System{Content: []Particle{}}
+	if config.General.Vitesse {
+		for i := 0; i < config.General.InitNumParticles; i++ {
+			rand.Seed(time.Now().UnixNano())
+			posY := (rand.Float64() * (float64(config.General.WindowSizeY)+200))-100
+			rad := (rand.Float64()*100)+(1-posY/float64(config.General.WindowSizeY))*100
+			col := rand.Float64()/2+0.2
+			if rand.Float64() < 0.5 {
+				config.General.VitesseX = -config.General.VitesseX
+			}
+			p := Particle{
+				PositionX: rand.Float64()*rad*2+(float64(config.General.WindowSizeX)/2-rad),
+				PositionYinit: posY,
+				PositionY: posY,
+				ScaleX:    1, ScaleY: 1,
+				ColorRed: col, ColorGreen: col, ColorBlue: col,
+				Opacity: 1,
+				SpeedX: config.General.VitesseX, SpeedY: 0,
+				Radius: rad,
+			}
+			sus.Content = append(sus.Content, p)
+		}
+	}else{
+		for i := 0; i < config.General.InitNumParticles; i++ {
+			rand.Seed(time.Now().UnixNano())
+			posY := (rand.Float64() * (float64(config.General.WindowSizeY)+200))-100
+			rad := (rand.Float64()*100)+(1-posY/float64(config.General.WindowSizeY))*100
+			col := rand.Float64()/2+0.2
+			spdX := rand.Float64()+2
+			if rand.Float64() < 0.5 {
+				spdX = -spdX
+			}
+			p := Particle{
+				PositionX: rand.Float64()*rad*2+(float64(config.General.WindowSizeX)/2-rad),
+				PositionYinit: posY,
+				PositionY: posY,
+				ScaleX:    1, ScaleY: 1,
+				ColorRed: col, ColorGreen: col, ColorBlue: col,
+				Opacity: 1,
+				SpeedX: spdX, SpeedY: 0,
+				Radius: rad,
+			}
+			sus.Content = append(sus.Content, p)
+		}
+	}
 	return sus
 }
+
 
 
 

@@ -20,8 +20,8 @@ Les configurations interressantes:
 	"Vitesse":false,
 	"VitesseX":1,
 	"VitesseY":5,
-	"ImgSizeX": 869,
-	"ImgSizeY": 980
+	"ImgSizeX": 10,
+	"ImgSizeY": 10
 }
 
 {
@@ -44,8 +44,8 @@ Les configurations interressantes:
 	"Vitesse":true,
 	"VitesseX":1,
 	"VitesseY":5,
-	"ImgSizeX": 869,
-	"ImgSizeY": 980
+	"ImgSizeX": 10,
+	"ImgSizeY": 10
 }
 
 {
@@ -68,8 +68,8 @@ Les configurations interressantes:
 	"Vitesse":false,
 	"VitesseX":1,
 	"VitesseY":5,
-	"ImgSizeX": 869,
-	"ImgSizeY": 980
+	"ImgSizeX": 10,
+	"ImgSizeY": 10
 }
 
 {
@@ -92,15 +92,15 @@ Les configurations interressantes:
 	"Vitesse":false,
 	"VitesseX":1,
 	"VitesseY":5,
-	"ImgSizeX": 869,
-	"ImgSizeY": 980
+	"ImgSizeX": 10,
+	"ImgSizeY": 10
 }
 
 {
 	"WindowTitle": "Il neige !",
 	"WindowSizeX": 800,
-    "WindowSizeY": 600,
-	"ParticleImage": "assets/particle.png",
+  "WindowSizeY": 600,
+	"ParticleImage": "assets/flocon.png",
 	"Configuration":"neige",
 	"Debug": true,
 	"InitNumParticles": 0,
@@ -120,4 +120,26 @@ Les configurations interressantes:
 	"ImgSizeY": 980
 }
 
-
+{
+	"WindowTitle": "Il vente !",
+	"WindowSizeX": 1920,
+  "WindowSizeY": 1010,
+	"ParticleImage": "assets/particle.png",
+	"Configuration":"tornade",
+	"Debug": true,
+	"InitNumParticles": 5000,
+	"RandomSpawn": false,
+	"SpawnX": 400,
+	"SpawnY": 550,
+	"SpawnRate": 10,
+	"MaxParticles": 40000,
+	"Gravite": 0.0,
+	"Rebonds":false,
+	"TempsVie":200,
+	"Taille": 1,
+	"Vitesse":false,
+	"VitesseX":1,
+	"VitesseY":5,
+	"ImgSizeX": 869,
+	"ImgSizeY": 980
+}

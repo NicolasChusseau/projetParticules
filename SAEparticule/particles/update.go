@@ -5,6 +5,7 @@ import (
   "math/rand"
   "time"
   "log"
+  "math"
 )
 
 // Update mets à jour l'état du système de particules (c'est-à-dire l'état de
@@ -294,6 +295,23 @@ func (s *System) update_plouf() {
 
 
 func (s *System) update_tornade() {
+  rand.Seed(time.Now().UnixNano())
+  for p,_ := range s.Content { //cette boucle sert à modifier les paramètres des particules et à vérifier si elles toujours visible à l'écran
+    ecartX := s.Content[p].PositionX - float64(config.General.WindowSizeX)/2
+    if ecartX >= s.Content[p].Radius || ecartX <= -s.Content[p].Radius{
+      s.Content[p].SpeedX = -s.Content[p].SpeedX
+    }
+
+    ecartY := math.Pow(math.Pow(s.Content[p].Radius, 2) - math.Pow(ecartX, 2), 0.5)/5
+    if s.Content[p].SpeedX < 0 {
+      s.Content[p].PositionY = s.Content[p].PositionYinit - ecartY
+    }else{
+      s.Content[p].PositionY = s.Content[p].PositionYinit + ecartY
+    }
+    s.Content[p].PositionX += s.Content[p].SpeedX
+
+  }
+  log.Println(len(s.Content))
 }
 
 
@@ -435,6 +453,15 @@ func EstNonVisible(p Particle) bool {
   return false
 }
 
+/*
+Renvoie la valeur absolue d'un Float64
+*/
+func abs(x float64) float64 {
+  if x < 0{
+    return -x
+  }
+  return x
+}
 
 
 
