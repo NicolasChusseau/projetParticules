@@ -11,6 +11,7 @@ type Config struct {
 	WindowTitle              string
 	WindowSizeX, WindowSizeY int
 	ParticleImage            string
+	Configuration						 string
 	Debug                    bool
 	InitNumParticles         int
 	RandomSpawn              bool
@@ -24,6 +25,8 @@ type Config struct {
 	Vitesse									 bool
 	VitesseX								 float64
 	VitesseY								 float64
+	ImgSizeX								 int
+	ImgSizeY								 int
 }
 
 var General Config

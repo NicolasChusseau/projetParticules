@@ -7,6 +7,7 @@ package particles
 type System struct {
 	Content []Particle
 	Spawnrate float64
+	Separation int
 }
 
 // Particle définit une particule.
@@ -24,4 +25,6 @@ type Particle struct {
 	SpeedX, SpeedY									float64
 	NonVisible										  bool
 	Vie 														int
+	Vague														int
+	Caillou													int
 }
